@@ -1,0 +1,8 @@
+NEXT.JS V-14
+
+
+######### FOLDER STRUCTURE 
+
+1. In nextJS v-14 we have src folder inside which we have app folder which is the newly introduced app router, Most of the time we will be working on this folder. Inside app folder we have layout.tsx file which is a way to define persistent layouts that wrap around specific page components or groups of pages. This helps you manage shared UI elements (like headers, footers, and sidebars) that should be consistent across multiple pages in your application.
+
+2. FLOW OF CODE :: when we run command npm run dev, The execution is transfered to layout.tsx file which contain "RootLayout" that accept children props which represent the page component (by-default page.tsx) to be shown in ui based on route in browser. package.json -> layout.tsx -> page.tsx (by-default) / any page component
