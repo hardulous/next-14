@@ -1,0 +1,14 @@
+ROUTING ::
+
+There are 2 types of routing in next.JS v-14 depending on what you choose while creating a next.js project, App Router or Page Router, The Page Router (used via the /pages directory) is still available and improved in Next.js 14. It's designed for projects that rely on the classic file-based routing and has full support for both static generation and server-side rendering.
+
+
+#### APP ROUTER ####
+
+1. Next.JS has a file-based routing mechanism, Where URL paths that user can access in the browser are defined by files and folders in your codebase. 
+
+2. All routes must be placed inside the app folder, Every file that corresponds to a route must be named page.js or page.tsx, Every folder corresponds to a path segment in the browser URL a user can access where name of the path is same as folder name. When all these conventions are followed the file automatically available as a route with name same as the folder name where this file is present. 
+
+ (a). Scenario-1 => To create a home page route for our application all we need to do is create a "page.tsx" file in the root of app directory. NOTE:: if we try to delete layout.tsx file at root of app folder it will be automatically created as it is the entry point of our application (similar to _app.js) which need to be present
+
+ (b). Scenario-2 => Now our app have t additional route "/about" or "/profile", So all we have to do is create 2 folder one with name about and other with name profile and have a page.tsx file that export default a component and we are done. 

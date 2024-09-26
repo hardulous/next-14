@@ -6,3 +6,11 @@ NEXT.JS V-14
 1. In nextJS v-14 we have src folder inside which we have app folder which is the newly introduced app router, Most of the time we will be working on this folder. Inside app folder we have layout.tsx file which is a way to define persistent layouts that wrap around specific page components or groups of pages. This helps you manage shared UI elements (like headers, footers, and sidebars) that should be consistent across multiple pages in your application.
 
 2. FLOW OF CODE :: when we run command npm run dev, The execution is transfered to layout.tsx file which contain "RootLayout" that accept children props which represent the page component (by-default page.tsx) to be shown in ui based on route in browser. package.json -> layout.tsx -> page.tsx (by-default) / any page component
+
+3. RSC (React Server Component), A feature introduced by the React team in v-18 to improve performance and user experience by allowing components to be rendered on the server. These components are designed to seamlessly integrate with client-side React, allowing you to offload some of the rendering work to the server while minimizing the amount of JavaScript that needs to be sent to the browser.
+
+Now 2 way of creating react component, "Server Component" and "Client Component"
+
+ (a). Server Component => In next.JS all components are server component by default, They have ability to run tasks like reading files or fetching data from a database, However we can not use react hooks and handle user interaction in them.
+
+ (b). Client Component => They are traditional react components we have used in prior version of react. In next.JS to create a client component it is necessary to add "use client" at the top of the component file, Client component can not perform tasks like reading files, But they have the ability to use hook and handle user interactions in them.  
