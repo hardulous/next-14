@@ -12,3 +12,11 @@ There are 2 types of routing in next.JS v-14 depending on what you choose while 
  (a). Scenario-1 => To create a home page route for our application all we need to do is create a "page.tsx" file in the root of app directory. NOTE:: if we try to delete layout.tsx file at root of app folder it will be automatically created as it is the entry point of our application (similar to _app.js) which need to be present
 
  (b). Scenario-2 => Now our app have t additional route "/about" or "/profile", So all we have to do is create 2 folder one with name about and other with name profile and have a page.tsx file that export default a component and we are done. 
+
+ (c). Scenario-3 => Now our app have "/blog" route which will have 2 nested route as well which is "/blog/first" and "/blog/second". To accomplish this next.JS allow us to have nested folder in app directory which result in nested route, So all we have to do is create first and second nested folder in blog folder.
+
+ (d). Scenario-4 => Now our app have product listing and detail page where user can see products list in "/product" route and details of specific product in "/product/id" , But here this "id" is dynamic so have to created dynamic route. The procedure of creating dynamic route is same as in prior version of next.JS which is "[productId]".js and for folder it is [productId]
+
+ (e). Scenario-5 => Now our app have nested dynamic route as well where with each product detail we will have product reviews as well based on id, So we will have a route "/product/232/review/3423". So all we need to do is to have another nested folder in [productId] folder which is review and inside will have [reviewId] folder. 
+
+ (f). Scenario-6 => Let say we are building documentation site where we have 20 features and each feature have 20 concepts so total of 20*20 = 400 (pages) in our app which we can reduce by dynamic route pattern which will cut down no of pages to 2 only, But we need to keep in mind that for each additional route in url we need an additional nested folder in our app router. To solve this we will create only one file that will handle all nested route segment in the url. It is called "catch all segments" 
