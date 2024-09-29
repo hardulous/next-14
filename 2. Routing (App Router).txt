@@ -19,4 +19,72 @@ There are 2 types of routing in next.JS v-14 depending on what you choose while 
 
  (e). Scenario-5 => Now our app have nested dynamic route as well where with each product detail we will have product reviews as well based on id, So we will have a route "/product/232/review/3423". So all we need to do is to have another nested folder in [productId] folder which is review and inside will have [reviewId] folder. 
 
- (f). Scenario-6 => Let say we are building documentation site where we have 20 features and each feature have 20 concepts so total of 20*20 = 400 (pages) in our app which we can reduce by dynamic route pattern which will cut down no of pages to 2 only, But we need to keep in mind that for each additional route in url we need an additional nested folder in our app router. To solve this we will create only one file that will handle all nested route segment in the url. It is called "catch all segments" 
+ (f). Scenario-6 => Let say we are building documentation site where we have 20 features and each feature have 20 concepts so total of 20*20 = 400 (pages) in our app which we can reduce by dynamic route pattern which will cut down no of pages to 2 only, But we need to keep in mind that for each additional route in url we need an additional nested folder in our app router. To solve this we will create only one file that will handle all nested route segment in the url. It is called "catch all segments", To create it just have folder nested in docs with name [...slug] and now slug is an array containing susbequent route segment after "/docs"
+
+ (g). Scenario-7 => Let say user hit route which our app has not handled so in this case next.JS shows default 404 page but in order to show our own custom 404 page in next.JS we can use "not-found.tsx" file at root of app directory. If we want a specific 404 page for every route just create "not-found.tsx" file at that route folder. Let say we want to programatically navigate to 404 page based on some condition let say we want to display 404 page for reviewId > 1000 so for this just execute "notFound()" function from next.JS "next/navigation" package.
+
+3. File Colocation refers to the practice of placing route-specific files (like components, styles, and tests) in the same directory as the route page.tsx file itself. This makes it easier to manage related files and keeps the project well-organized, especially as it scales. Here let say we have "/dashboard" route and have created the dashboard folder in app directory but not created page.tsx file inside it, So it means the route with name "/dashboard" is publically accessible but only content returned by page.tsx file will be sent to the client, And that content must be a default exported react component. So it means inside any folder in app directory we can create route specific file or folder like components, styles, config etc. Which will not effect our page.tsx file. 
+
+4. Private Folders are another way to organize our app codebase in efficient way. It indicates that it is a private implementation detail and should not be considered by the routing system so we can put any types of files inside it, Seprating UI login from routing login. So To create private folder just prefix the folder name with an underscore. 
+
+5. Route Groups allow us to logically group routes and project files of similar feature without affecting the URL path structure. Let say we have authentication route which consist of register, login and forgot-password routes. Now without route group we will be creating seprate folder for each route which is scattered on app directory. It is managable if we are the only developer working on the project since we know everything about the project but when working with team we should ensure good developer exprience, One way is to create a seprate folder "auth" which contain authentication route related work. But now we have additonal route segment "/auth" with each of 3 route, So to avoid the additonal segment of route as well "route groups" comes to the rescue. To create route group use "(route group)" parenthesis as folder name, And now that additional "/auth" in path segment will no longer be there.  
+
+6. Layouts are UI that are shared between multiple pages in the app. When building app it is common to have consistent UI across multiple page like header at the top, footer at the bottom and everything which change between them only but these 2 remain consistent for every pages. 
+
+  (a). To create a layout just export default a react component from either layout.js or layout.tsx file either in app directory (root layout) and in sub folder directory (route specific layout) inside app. 
+
+  (b). That component should accept a children prop that represent a child page component during rendering. 
+
+  (c). Just like routes layouts can be nested as well, Let say if we want a specific layout for "/products" page then all we have to do is to create a layout.tsx file in products folder. 
+
+  (d). Just like route group are created to group together route with similar feature together without having to add additional path segment, Now to selectively apply a layout to a certain segments while leaving other unchanges we use layout in route group. 
+
+7. When building app it is imp to implement proper SEO for increasing visibility and attracting users. Metadata ensures accurate and relevant information to be displayed when our pages are shared or indexed by web crawlers. title, description, Open Graph (OG) tags, and other meta information can be added using the metadata API. This allows you to set metadata dynamically for pages, routes, or layouts. 
+
+ (a). There are 2 way to configure metadata in layout.tsx or page.tsx either by export a static metadata object or export a dynamic generateMetadata() function
+
+ (b). Both layout.tsx and page.tsx file can exporte metadata. If defined in a layout, it applies to all pages in that layout, But if defined in a page, it applies only to that page. 
+
+ (c). Metadata is read in order, from the root level down to the final page level.
+
+ (d). When there is metadata in multiple place for the same route, They go combined but page meta data will replace the layout metadata if they have the same properties. 
+
+ (e). The title field purpose in metadata object is to define the document title. It can be either a string or an object. 
+
+8. In real world app instead of manually entered the URL in browser's address bar to navigate to different routes, Users rely on UI elements like links to navigate. Clicking on them or by programmatic navigation on completion of an action. 
+
+(a). To enable client side navigation we use <Link/> component with href prop that extends the HTML "<a>" element and it is primary way to navigate between the routes in next.JS. To use it we need to import it from "next/link"
+
+(b). Sometime we need to show active link which is styling the link which is currently active in the browser that enhances the user experience. For this we use "usePathname()" hook.
+
+(c). Sometime we need to navigate programatically after some operation is completed for ex, after order is completed in "/order-product" page we will re-direct user to home page. For this we use "useRouter" hook of page router in app router as well. 
+
+9. Templates in next.JS are similar to layouts in the way they wrap each child layout or page that remain consistent for them. But the difference is templates re-render on each navigation even if they are reused between pages., whereas layouts are cached and persistent between navigations unless they contain a Segment that has changed. A template can be defined by default exporting a react component from template.js or template.tsx file. Similar to layout templates should accept a children prop which will render the child layout or page. 
+
+10. Loading file in next.JS allow us to create loading state that are displayed to users while a layout, page and template content is loading. Loading state appears immediately on navigation, giving users the assurance that the app is responsive and actively loading content. To create loading state just create a loading.tsx file in the route folder which export default a react component for which loading state is applied, in our case we apply it on "/blog" route. 
+
+11. To handle error in next.JS we use error file that allows you to display custom error messages or handle errors gracefully whenever an error occurs by export default a react component for ex, while showing a review of a product in "/products/123/reviews/1233" a network error occured. 
+
+ (a). It accept a prop which consist of error object of type Error that caused the error boundary to trigger and a reset() function to retry loading the page or component again that caused the error.
+
+ (b). Error handling in nested routes follows a hierarchical structure where each segment can have its own error.js file to handle errors specific to that segment. Any error that pop up will bubble up to its nearest error.tsx file. ex, right now the error.tsx file is present inside [reviewId] folder so if any error pup it will replace the UI part of [reviewId] segment, Now put error.tsx file at products folder and now if any error come it will replace the whole products segment UI. 
+
+ (c). We can also handle error in layout but not as we do for page. An error.tsx file will hanndle errors for all its nested child segments but does not catch errors thrown in layout.tsx file at same level, Because as the component hierarchy of special file component in below point we can see the layout component sits above the errorBoundary component. 
+
+
+12. The component or file hierarchy in app router is :: 
+
+layout -> template -> error -> loading -> not-found -> page 
+
+ <Layout>
+  <Template>
+    <ErrorBoundary fallback={<Error/>}>
+      <Suspense fallback={<Loading/>}>
+        <ErrorBoundary fallback={<NotFound/>}>
+          <Page/>
+        </ErrorBoundary>
+      </Suspense>
+    </ErrorBoundary>
+  </Template>
+ </Layout>
+ 

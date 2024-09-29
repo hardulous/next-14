@@ -1,7 +1,12 @@
+import Link from "next/link"
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <h1>WELCOME TO OUR HOME PAGE</h1>
+      <Link href="/blog">Blog</Link>
+      <Link href="/products">Products</Link>
+    </div>
   )
 }
 
