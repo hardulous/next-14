@@ -87,4 +87,8 @@ layout -> template -> error -> loading -> not-found -> page
     </ErrorBoundary>
   </Template>
  </Layout>
+
+13. Parallel routes are an advanced routing mechanism that allows the simultaneious rendering of multiple pages within the same layout. 
+
+  Scenario-8 => We will be creating a layout that consist of Header, Footer and centre dynamic page which is dahsboard but instead of single page we want to show multiple page in center which are User Analytics, Revenue Metrics, Notifications etc. To accomplish this we will use Parallel routing. 
  
