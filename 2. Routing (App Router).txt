@@ -90,5 +90,52 @@ layout -> template -> error -> loading -> not-found -> page
 
 13. Parallel routes are an advanced routing mechanism that allows the simultaneious rendering of multiple pages within the same layout. 
 
-  Scenario-8 => We will be creating a layout that consist of Header, Footer and centre dynamic page which is dahsboard but instead of single page we want to show multiple page in center which are User Analytics, Revenue Metrics, Notifications etc. To accomplish this we will use Parallel routing. 
- 
+  Scenario-8 => We will be creating a layout that consist of Header, Footer and centre dynamic page which is dahsboard but instead of single page we want to show multiple page in center which are User Analytics, Revenue Metrics, Notifications etc. To accomplish this we will use Parallel routing. Parallel routes are defined using a feature know as slots. Slots are used to insert content into predefined areas of a layout in parallel routes. Slots allow you to define placeholders within a layout, and then dynamically inject different components or page content into those placeholders. To define a slot, we use '@folder' naming convention. Each slot is then passed as a prop to its layout.tsx file. 
+
+  Scenario-9 => Now we will do sub-navigation on slots in which user can sub-navigate from default list of notifications to archived list of notifications. By default when user go to "/complex-dashboard" the 3 slot show some content. But when i go to route "/complex-dashboard/archived" only @notifications slot has the matching route and the other 2 become unmatched. When dealing with unmatched route the content rendered by next.JS depend on the routing apprach. To solve the issue we use "default.tsx" file  
+
+  Scenario-10 => Parallel route provide a way to render routes on condition. Now based on authenticated user we will show user either a login page or dashboard page. 
+
+14. Another routing pattern is "intercepting routes" which refers to the ability to intercept a user's navigation to a specific route and take some action, such as showing a modal, redirecting, or handling a request conditionally before it reaches its final destination when navigating through the UI (Link component and programmatic navigation), While the route on the browser changes or sharable for page reloads. EX ::
+
+ Scenario-1 => Let say un-authenticated user visit our site and click on login button normally the app will take him to "/login" route from where he will be shown login page, However with intercepting route the login modal will be shown to the user when he click on login button while the route on the browser also changes to "/login" which is sharable means if user access this "/login" route directly then he will be shown "/login" page instead of modal. 
+
+ Scenario-2 => User can see list of photos in "/photos" route and click on any photo leads to URL change in browser to "/photos/[id]" and show photo detail in a modal view which the link is also shareable. 
+
+To configure intercepting routes we need to follow certain conventions ::
+
+ (a). (.)folder_name for which intercepting route we are creating. For us we will have (.)f2 which will create intercepting route for "/f1/f2" folder on same level as f2. 
+
+ (b). It is possilbe to match segment one level above the convention is (..)folder_name for which intercepting route we are creating. 
+
+ (c). To match segments 2 level above we use (..)(..)folder_name
+
+ (d). To match segment from root app directory we use (...)folder_name, Let say we need to intercept "/about" route "/f4" route so (...)about 
+
+@@@@ NOTE :: When created a intercepting route or default.tsx file to handle slot routing sometime in dev server code does not reflect so in this case just re-start the dev server and we are done @@@@@
+
+15. To understand real world example of "parallel route" with "intercepting route" watch video "https://www.youtube.com/watch?v=mVOvx9eVHg0&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=32"
+
+16. Route handler is a special feature that allows you to define API endpoints or handle HTTP requests directly within the /app directory. There is no need to create and configure a seprate server, Route handlers run on server side and are serverless functions (A serverless function is a small, single-purpose, stateless piece of code that runs in a serverless architecture, typically in response to events such as HTTP requests, database updates, or other triggers.). Ensuring sensitive information like private keys remains secure and never get shipped to the browser.
+
+ We need to follow some conventions to implement it ::
+
+ (a). In app router Similar to page route , Route handler must be placed inside app directory. 
+
+ (b). Similar to page route the folder name is the name of route and inside that folder the "page.tsx" file is the content shown on that route, For route handler the name of the folder again is the name of the api endpoint and the inside "route.ts" is the async function that handle the request. EX, "/hello" contain route.ts file which export a GET() function. 
+
+ (c). We will use "/comments" route handler to understand how to handle, GET, POST etc http request in next.JS. 
+
+ (d). HTTP headers represent the metadata associated with an API request and response. To understand it we will work wth "/hello/api" route handler. 
+
+ (e). Cookies are small pieces of data that a server sends to a user's web browser. The browser may store the cookie and send it back to the same server with later requests. Cookies are mainly used for three purposes ::
+
+  1. Session management like logins and shopping carts
+
+  2. Personalization like user preferences and themes
+
+  3. Tracking like recording and analyzing user behaviour
+
+  (f). Route handlers are cached by default when using the GET method with the response object in next.JS 
+
+17. 
