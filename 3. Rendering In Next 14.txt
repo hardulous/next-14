@@ -1,0 +1,15 @@
+RENDERING ::
+
+Rendering is the process that transforms the code we write into user interfaces. In next.JS choosing the right time and place to do this rendering is vital for building a performant application. 
+
+There are 3 types of rendering in next.JS ::
+
+CSR , SSR and RSC
+
+1. Client Side Rendering (CSR) => It is a type of rendering where pages or components are rendered entirely on the client (browser) rather than on the server. CSR is often used when you need interactive, dynamic content that heavily relies on browser-side logic, like data fetching after the page is loaded, handling user input, and more. CSR became the standard for single page application (SPA) but there are some drawbacks ::
+
+ SEO => Generating HTML that contains only a single div tag is not optimal for SEO, as it provides little content for search engines to index.
+
+ PERFORMACE => Having the browser (the client) handle all the work such as data fetching, making HTML interactive can slow things down. Each new feature added to the application increase the size of the JS bundle prolonging the wait time for users to see the UI. 
+
+2. Server Side Rendering (SSR) => 
