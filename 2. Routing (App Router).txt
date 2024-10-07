@@ -138,4 +138,8 @@ To configure intercepting routes we need to follow certain conventions ::
 
   (f). Route handlers are cached by default when using the GET method with the response object in next.JS 
 
-17. 
+17. Middleware in next.JS offers a way to intercept and control the flow of requests and responses within your application. It does this at a global level enhance features like redirection, URL rewrites, authentication, headers and cookies management and more. 
+
+ (a). The middleware.ts file should reside at the root of your project or within specific directories to scope its application.
+
+ (b). 
