@@ -54,5 +54,29 @@ CSR , SSR and RSC
 
   (c). Inspite of server's superior capacity for handling intensive processing tasks, The bulk of js code still executes on user's device. This can slow down the performance on device which is not powerful. 
 
+  TO solve above issue React Server Components (RSC) comes to the rescue ::
+
+3. RSC => A new architecture designed by the react team. This approach aims to leverage the strength of both server and client environment, optimizing efficiencey, load time and interactivity. It involve dual component model ::
+
+ "Client Components" and "Server Components" , This distinction is not based on the functionality of the component but rather on where they execute and the specific environment they are designed to interact with. 
+
+ (a). Client Component => They are the react components we have been using till now before learning this new RSC concept. They are typically rendered on the client-side (CSR). Client Components are rendered and executed entirely on the client-side (in the user's browser).Since they are present in browser environment so they can interact with browser-specific APIs like window, document, localStorage, and react features like useEffect, useState etc. They can also be rendered on the server. 
+
+ (b). Server Component => A new type of react component specifically designed to operate on the server. Unlike client component, their code stays on the server and is never downloaded to the client. Since the are present in server environment so they do not have access to browser-specific APIs and cannot handle things like user interactivity(onChange, onClick event listeners etc, and useEffect(), useState() hooks use).
+
+ BENIFIT OF SERVER COMPONENT ::
+
+ (a). Reduced bundle size as server component do not send js code to the client as they send only rendered HTML page to the client allowing large dependencies to remain server-side, Which benifit the user with slower internet connection or less capable device. Additionally it removes the hydration step which speed up app loading and interactivity time. 
+
+ (b). Direct access to server-side resource like databases and fs module etc, enable efficient data fetching and rendering without needing additonal client side processing. 
+
+ (c). Enhances security as serve side execution keeps sensitive data and login like tokens and API keys away from client-side. 
+
+ (d). Improved data fetching as in client side data fetching happens after the page initial render in useEffect(), which can lead to slower initial page rendering (since the data isn't available at the time of the first render). But in server component data is fetched on the server before the component renders. Since the HTML with the data is sent to the client directly, it results in faster initial page rendering.
+
+ (e). Caching of result from data fetching can be done on the server, which can be reused in subsequent request of similar type. Improves performance by reducing the amount of data fetching required for each request. 
+
+ In RSC Server component take charge of data fetching and static rendering, while Client component are tasked with rendering the interactive elements of the app. RSC architecture in react enables us to use best of both server and client component. 
+
 
 
