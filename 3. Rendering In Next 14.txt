@@ -78,5 +78,6 @@ CSR , SSR and RSC
 
  In RSC Server component take charge of data fetching and static rendering, while Client component are tasked with rendering the interactive elements of the app. RSC architecture in react enables us to use best of both server and client component. 
 
+ ############ HERE next.JS 14 app router is built using RSC architecture ########################
 
 
