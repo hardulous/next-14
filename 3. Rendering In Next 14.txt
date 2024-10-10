@@ -80,4 +80,20 @@ CSR , SSR and RSC
 
  ############ HERE next.JS 14 app router is built using RSC architecture ########################
 
+4. ##### Practical Server Or Client Component #####
 
+  (a). By default every component in next.JS for ex, page.tsx, layout.tsx and any newly created component are considered a server component. 
+
+  (b). For example if i create a component inside about-server directory then it by-default a server component. Inside this component if i do console.log("hello") and hit the "/about-server" on browser i will be shown the pre-rendered html page of "/about-server" but that console.log() will not be shown in browser but rather on server (terminal) because server component run on server-side not in client browser.
+
+  (c). To enable user interactivity, access to browser API'S like localStorage, useEffect(), useState() etc. We use client component and in order to make a client component just add a directive or special instruction at the top of server component "use client" to make a client component.
+  
+  (d). React Server Component (RSC) Lifecycle => Lifecycle means how the server or client component come to life on user's screen. In RSC there are 3 elements: Browser (client), Next.JS (server) and React (UI). In next.JS when user request for a page in browser the next.js app router mathces the requested URL to a server component. next.JS them instruct react to render that server component. React then render that server component and any child component that are also a server component converting them into a special JSON format know as the "RSC PAYLOAD" ( which is a .rsc file downloaded on user network tab when a user request for a page ). During this rendering if any server component uses <Suspense/> then react pauses rendering for that subtree and sends a placeholder value instead. On the other hand client component are prepared with the instruction for later load in the lifecycle. next.JS uses rsc payload that includes client component instructions to generate HTML on the server, This HTML is streamed to user's browser to immediately show a fast non-interactive preview of the route alongside next.JS streams the RSC payload as react renders each unit of UI, React uses this streamed HTML with rsc payload along with client component instruction to progressively render the UI. Once final UI state is presented to the user then client component undergo hydration that transforms our app from static non-interactive display into an interactive UI. 
+
+  On update sequence for refreshing parts of the app, The browser request a refetch of a specific UI such as a full route, next.JS process the request and matches it to the requested server component. Then again react rendering ui on server with client component instructions is done by next.JS but this time no HTML generation for the page again insteadd next.JS create an updated RSC payload and streamed it to the client. Using the RSC payload next.JS trigger the route re-render which result in react re-rendering also which result in merging the updated output of ui with the existing component on screen. 
+
+5. There are 3 types of server rendering strategies ::
+
+ (a). Static Rendering => It is a server rendering strategy where we generate HTML pages at time of building our application that is on "npm run build", It means all the data content for a web page are prepared in advance. This allow the page to be built once, cached by a CDN and served to the client almost instantly. Usefull for static webpages like blog pages, documentation and marketing pages etc. 
+
+ In next.JS app router by-default static rendering take place.  
