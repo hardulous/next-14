@@ -97,3 +97,25 @@ CSR , SSR and RSC
  (a). Static Rendering => It is a server rendering strategy where we generate HTML pages at time of building our application that is on "npm run build", It means all the data content for a web page are prepared in advance. This allow the page to be built once, cached by a CDN and served to the client almost instantly. Usefull for static webpages like blog pages, documentation and marketing pages etc. 
 
  In next.JS app router by-default static rendering take place.  
+
+ Let say we have "/" page which contain Link to "/dasboard" now both are different page which are static in nature so pre-rendered HTML file for both are present when build the application, But when user navigate to "/" which contain a Link to "/dasboard" we will apart from HTML and code related to "/" route in network download it also downloaded the JS code (RSC payload) for "/dasboard", And when user navigate to "/dasboard" nothing new will be downloaded and the "/dasboard" page will be shown instantly. This is because of concept called "PRE-FETCHING"
+ 
+ "PRE-FETCHING" is a technique used to preload a route in the background before user navigate to it. Routes are automatically prefetched as they become visible in the user's viewport, either when the page first loads or as it comes into the view by scrolling. 
+
+ For static routes, the entire route is prefetched and cached by default.
+
+ Here when navigating to "/dashboard" from "/" apoart from RSC payload it will also not download the .HTML file for "/dashboard" because it will be served when user directly navigate to the route "/dashboard".
+
+ (b). Dynamic Rendering => It is a server rendering strategy where routes or HTML are generated on demand at request time, When user send request for it. It is useful when a route has data that is personalized to the user or contains information that can only be known at request time, such as cookies or the URL's search params. EX of dynamic rendering are social media feeds etc..
+
+ In next.JS to perform dynamic rendering we just need to use dynamic functions during rendering. During rendering if a dynamic function is discovered next.JS will switch to dynamic rendering the whole route.
+
+ In next.JS dynamic functions are cookies(), headers(), searchParams() etc.. Using any of these will opt the whole route into dynamic rendering at request time. 
+
+ EX, in "/about" component just use cookies() dynamic function and we are done. Now the HTML page for "/about" will not be generated at build time but at request time on demand by user. 
+
+ (c). Streaming => It is a server rendering strategy that allows progressive UI rendering from the server. Work is divided into chunks and streamed to the client as soon as it is ready. This enables users to see parts of the page immediately, Before the entire content has finished rendering. It improves the initial page load time and rendering of UI elements that rely on slower data fetches, Which would otherwise block the rendering of entire route. 
+ 
+ In next.JS to peform streaming just wrap the component we want to stream render in between <Suspense> Component <Suspense/>. 
+
+
