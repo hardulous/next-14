@@ -119,3 +119,21 @@ CSR , SSR and RSC
  In next.JS to peform streaming just wrap the component we want to stream render in between <Suspense> Component <Suspense/>. 
 
 
+6. Context Providers are rendered near the root of an application to share global state and logic. Ex, application theme. But  react context is not supported in server components because it is a BROWSER API, attempting to create a context at server level result in error. 
+
+One way of solving it is by making that server compoonent client but then we lost all server-side feature so,
+
+To address this, we can create a context as a seprate client component and render its provider inside server component. 
+
+EX, in layout.tsx file of app root we will provide theme object down to nested component which is "/about-client"
+
+
+7. Client Component Placement => To compensate for server components not being able to manage state and handle interactivity, We need to create client components. 
+
+ (a). When using client component it is recommended to position them lower in your component tree.
+
+ (b). Let say have app which contains navbar at top and "/landing-page" as content. Now navbar contain 2 child component navLinks and navSearch. By-default all components are server component. Now added console.log in every component to see where they are executed in server or client. by-default all executed at server level but now we want to handle interactivity at navSearch so state at navBar component and pass it down as a prop to navSearch. But to use state we have to make navBar as client component. But as soon as we do this we will see console.log in browser for navBar, navLink and navSearch. This is because when we add "use client"; to a component it will not only make that component a client component but also affect every child component in a component tree below it. So navBar and all its nested child component also become a client component.
+
+ (c). "use client"; is like a boundary once crossed everything after it will operates on client level. Due to this the code of navBar and its child will be sent to the browser. To solve it place client component as low as possible in component tree making them a leaf component. So put state at navSearch instead of in navBar, Now only navSearch execute at client level and rest at server level. 
+
+8.  Interleaving server and client => It is a pattern of hit and trial combination of server and client component with each other as a parent-child realtion between them and how they operate on it. 

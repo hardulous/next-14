@@ -1,0 +1,35 @@
+DATA FETCHING ::
+
+Here in real word app data present either in pre-rendered HTML or based on UI interaction comes from external api source. App router uses the RSC architecture, which allows to fetch data using both server or client ccomponent. It is advantageous to fetch data using server components, as they have direct access to server-side resource such as database or file system.By fetching data in server-side we are minimizing the need for client side processing. 
+
+1. Fetching Data With Server Component => In RSC architecture we can fetch data directly within server components using async keyword by making the server component async, as all components in the App Router are server components by default. This allows you to fetch data during the server-side rendering or when generating static pages. 
+
+@@@@@ NOTE:: Shortcut of creating file in directory is create a file with the name "users/page.tsx" this will automatically create page.tsx inside users direcctory @@@@@@
+ 
+ (a). When fetching data in server component we dont need useEffect() to fetch or useState() to store fetched data just fetch data inside server component and store in a variable and use that variable to populate the UI. 
+
+ (b). In react app we handle loading and error state using state and based on their value we conditionally render the UI. In app router to handle them for loading state we export default a loading component from "loading.tsx" file and for error state we export default a error component from "error.tsx" file. 
+
+ (c). For new we will use json-server package to create localdatabase in "db.json" file and "server.js" file for api. To run json server command "node server". 
+
+ (d). Now on "/server-products" we will display list of products coming from our json server. Now product information like pricing can change often let say we change the product 1 price from 800 to 700 and restart json server, Now after this if user visit the "/server-products" it will still show the previous value or data 800 in case of serving app from build not in dev mode. By-default next.JS extends the native fetch api and automatically caches the returned value from fetch which improves performance and reduces cost. It stores the initial fetch data in "data cache" on the server and reuse for every subsequent request which eliminate the need to repeatedly query our json server.
+
+ (e). Data Cache is a server side cache that persists the result of data fetches across incoming server request and deployments. It improves app performance and reduces costs by eliminating the need to re-fetch data from your data source with every request. Its working is similar to how caching working using indexDB. The ".next" build folder of next.js there is a "cache" folder inside which another "fetch-cache" folder which contain the cached result. It is a server side cache not browser side so even if we visit the same "/server-products" route from different browser still it will use the cached fetch data present on the server. 
+
+ (f). Sometime we dont want this caching behaviour in this case we can opt out of caching. For data fetches we can set the "cache" option of fetch to "no-store" value to opt out of caching in most simiplest way. But once we specify the "no-store" option for any fetch request, subsequent fetch request will also not be cached. EX ::
+
+let say before making request to "no-store" "/products" i am also making request to "/products/1" in this case the former will not be cached but the latter is cached. Now after "no-store" "/products" i am making the "/products/1" fetch request, The both fetch request are now "no-store" or not cached.     
+
+ (g). There is a scenario of dynamic data which depend on some information like cookies, header etc. In this case by-default next.JS cache fetch() requests that occur before any dynamic functions like cookies(), headers(), searchParams obj, But after them will not cache any subsequent request. 
+
+ (h). Request memoization is a technique that deduplicates requests for the same data within a single render pass. This allow us to re-use data in react component tree, Prevents redundant network calls and enhance performance. EX ::
+
+ let say we have layout.tsx for "/server-products" route in which i am making same request "/products" now they both are parent-child component so part of single render phase, So only one time request will be made in layout component and child page component will get the result from stored "request-memoization". 
+
+ "Request-Memoization" is a react feature not a next.js feature. Memoization only applies to the GET method in fetch requests. Foe cases where fetcch is not suitable (ex, some databse clients, CMS clients etc), we can use react "cache" function to memoize. 
+
+ (i). In real world app there are scenarios where we need to fetch updated data after some time has been passed (similar to ISG in page router). EX, An event listings page where event details such as schedule or venue information changes occasionally. In this case it is acceptable to fetch updated data once every hour as freshness is not critical. For these scenarios next.JS allow us to revalidate the cache. 
+
+ Revalidation is the process of purging the "data-cache" and re-fetch the latest data. one revalidation strategy is time based revalidation where next.JS automatically revalidate data after a certain amount of time has passed. We can pass "revalidate" option in fetch. 
+
+ (h). When doing client side data fetching using "useEffect(), onChange(), onClick() etc." We dont get feature like request-memoization, caching and revalidation out of the box. For these features we can use library called "TanStack Query". 

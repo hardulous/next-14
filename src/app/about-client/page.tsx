@@ -1,8 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "../components/theme-provider";
 
 const AboutClient = () => {
+
+  // Consuming context
+  const theme = useTheme()
 
   // It will be shown 2 times on browser because of react strict mode and 1 time on server (terminal)  
   console.log("Client Render")
@@ -11,7 +15,9 @@ const AboutClient = () => {
 
   return (
     <>
-      <h2>About Client</h2>
+      <h2 style={{
+        color: theme.colors.primary
+      }}>About Client</h2>
       {name}
       <input value={name} onChange={(e) => setName(e.target.value)} />
     </>
